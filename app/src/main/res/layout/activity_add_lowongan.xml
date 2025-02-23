@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.AddLowonganActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="30dp">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="20dp"
+        android:contentDescription="@string/img_view_desc"
+        android:src="@drawable/logo_kemenhan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/back_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/logo"
+        app:layout_constraintTop_toTopOf="@id/logo"
+        app:layout_constraintBottom_toBottomOf="@id/logo"/>
+
+        <TextView
+            android:id="@+id/lowongan_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tambah_lowongan"
+            android:textSize="25sp"
+            android:layout_marginTop="40dp"
+            android:textStyle="bold"
+            android:textColor="@color/primary"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/back_button" />
+
+        <TextView
+            android:id="@+id/poisi_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/nama_posisi"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="40dp"
+            android:layout_marginHorizontal="20dp"
+            app:layout_constraintTop_toBottomOf="@id/lowongan_title"
+            app:layout_constraintStart_toStartOf="@id/lowongan_title"
+            app:layout_constraintEnd_toEndOf="@id/lowongan_title"/>
+
+        <EditText
+            android:id="@+id/poisi_input"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:inputType="text"
+            android:background="@drawable/shape_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/poisi_title"
+            app:layout_constraintStart_toStartOf="@id/poisi_title"
+            app:layout_constraintEnd_toEndOf="@id/poisi_title"/>
+
+        <TextView
+            android:id="@+id/divisi_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/divisi_title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/poisi_input"
+            app:layout_constraintStart_toStartOf="@id/poisi_input"
+            app:layout_constraintEnd_toEndOf="@id/poisi_input"/>
+
+        <EditText
+            android:id="@+id/divisi_input"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:inputType="text"
+            android:background="@drawable/shape_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/divisi_title"
+            app:layout_constraintStart_toStartOf="@id/divisi_title"
+            app:layout_constraintEnd_toEndOf="@id/divisi_title"/>
+
+        <TextView
+            android:id="@+id/periode_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/periode"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/divisi_input"
+            app:layout_constraintStart_toStartOf="@id/divisi_input"
+            app:layout_constraintEnd_toEndOf="@id/divisi_input"/>
+
+        <EditText
+            android:id="@+id/periode_input"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:inputType="text"
+            android:background="@drawable/shape_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/periode_title"
+            app:layout_constraintStart_toStartOf="@id/periode_title"
+            app:layout_constraintEnd_toEndOf="@id/periode_title"/>
+
+        <TextView
+            android:id="@+id/tutup_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/tutup_pada"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/periode_input"
+            app:layout_constraintStart_toStartOf="@id/periode_input"
+            app:layout_constraintEnd_toEndOf="@id/periode_input"/>
+
+        <EditText
+            android:id="@+id/tutup_input"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:inputType="text"
+            android:background="@drawable/shape_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/tutup_title"
+            app:layout_constraintStart_toStartOf="@id/tutup_title"
+            app:layout_constraintEnd_toEndOf="@id/tutup_title"/>
+
+        <TextView
+            android:id="@+id/deskripsi_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/deskripsi"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/tutup_input"
+            app:layout_constraintStart_toStartOf="@id/tutup_input"
+            app:layout_constraintEnd_toEndOf="@id/tutup_input"/>
+
+        <EditText
+            android:id="@+id/deskripsi_input"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:inputType="text"
+            android:background="@drawable/shape_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/deskripsi_title"
+            app:layout_constraintStart_toStartOf="@id/deskripsi_title"
+            app:layout_constraintEnd_toEndOf="@id/deskripsi_title"/>
+        
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_add_lowongan"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/primary"
+            android:text="@string/tambah_lowongan"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="@id/deskripsi_input"
+            app:layout_constraintStart_toStartOf="@id/deskripsi_input"
+            app:layout_constraintTop_toBottomOf="@id/deskripsi_input" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

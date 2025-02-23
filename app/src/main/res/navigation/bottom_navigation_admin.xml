@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_navigation_admin">
+
+    <fragment
+        android:id="@+id/nav_job"
+        android:name="com.example.capstone.ui.fragment.VerifikasiRegistrasiFragment"
+        android:label="@string/verifikasi_registrasi_magang"
+        tools:layout="@layout/fragment_verifikasi_registrasi" />
+
+    <fragment
+        android:id="@+id/nav_docs"
+        android:name="com.example.capstone.ui.fragment.VerifikasiDocsFragment"
+        android:label="@string/verifikasi_dokumen"
+        tools:layout="@layout/fragment_verifikasi_docs" />
+
+</navigation>

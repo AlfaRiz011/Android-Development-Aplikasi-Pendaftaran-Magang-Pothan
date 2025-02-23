@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.DetailActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="30dp">
+
+        <ImageView
+            android:id="@+id/image_banner"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:contentDescription="@string/img_view_desc"
+            android:scaleType="fitXY"
+            android:src="@drawable/ilustrasi_job"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/shape_divisi"
+            android:backgroundTint="@color/primary"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:text="@string/back"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            app:layout_constraintBottom_toBottomOf="@id/image_banner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <View
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/shape_detail_job"
+            app:layout_constraintBottom_toBottomOf="@id/deskripsi_value"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/divider" />
+
+        <TextView
+            android:id="@+id/nama_posisi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="50dp"
+            android:paddingEnd="10dp"
+            android:text="@string/nama_posisi"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/background"
+            tools:ignore="RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/divisi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:paddingVertical="5dp"
+            android:text="@string/divisi"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/nama_posisi"
+            app:layout_constraintTop_toBottomOf="@id/nama_posisi" />
+
+        <TextView
+            android:id="@+id/divisi2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/shape_divisi"
+            android:paddingVertical="5dp"
+            android:text="@string/direktorat"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/divisi"
+            app:layout_constraintEnd_toEndOf="@id/nama_posisi"
+            app:layout_constraintStart_toEndOf="@id/divisi"
+            app:layout_constraintTop_toTopOf="@id/divisi" />
+
+        <TextView
+            android:id="@+id/periode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="20dp"
+            android:paddingVertical="5dp"
+            android:text="@string/periode"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/nama_posisi"
+            app:layout_constraintTop_toBottomOf="@id/divisi2" />
+
+        <TextView
+            android:id="@+id/periode_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_edit_text"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            android:text="@string/example_periode"
+            android:textColor="@color/whiteCream"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/nama_posisi"
+            app:layout_constraintTop_toBottomOf="@id/periode" />
+
+        <TextView
+            android:id="@+id/waktu_tutup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="20dp"
+            android:paddingVertical="5dp"
+            android:text="@string/waktu_tutup"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/nama_posisi"
+            app:layout_constraintTop_toBottomOf="@id/periode_value" />
+
+        <TextView
+            android:id="@+id/waktu_tutup_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_edit_text"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            android:text="@string/example_date"
+            android:textColor="@color/whiteCream"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/nama_posisi"
+            app:layout_constraintTop_toBottomOf="@id/waktu_tutup" />
+
+        <TextView
+            android:id="@+id/deskripsi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="20dp"
+            android:paddingVertical="5dp"
+            android:text="@string/deskripsi"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/nama_posisi"
+            app:layout_constraintTop_toBottomOf="@id/waktu_tutup_value" />
+
+        <TextView
+            android:id="@+id/deskripsi_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/lorem"
+            android:textColor="@color/whiteCream"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/deskripsi" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_daftar"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/primary"
+            android:text="@string/daftar"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="@id/deskripsi_value"
+            app:layout_constraintStart_toStartOf="@id/deskripsi_value"
+            app:layout_constraintTop_toBottomOf="@id/deskripsi_value" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/diterima"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            app:icon="@drawable/icon_approve"
+            app:iconGravity="textStart"
+            android:backgroundTint="@color/green"
+            android:text="@string/diterima"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            app:cornerRadius="10dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/deskripsi_value"
+            app:layout_constraintStart_toStartOf="@id/deskripsi_value"
+            app:layout_constraintTop_toBottomOf="@id/deskripsi_value" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/pending"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            app:icon="@drawable/icon_pending"
+            app:iconGravity="textStart"
+            android:backgroundTint="@color/yellow"
+            android:text="@string/pending"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            app:cornerRadius="10dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/deskripsi_value"
+            app:layout_constraintStart_toStartOf="@id/deskripsi_value"
+            app:layout_constraintTop_toBottomOf="@id/deskripsi_value" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
