@@ -5,7 +5,7 @@
     android:id="@+id/bottom_navigation_admin">
 
     <fragment
-        android:id="@+id/nav_job"
+        android:id="@+id/nav_job_admin"
         android:name="com.example.capstone.ui.fragment.VerifikasiRegistrasiFragment"
         android:label="@string/verifikasi_registrasi_magang"
         tools:layout="@layout/fragment_verifikasi_registrasi" />

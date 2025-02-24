@@ -16,6 +16,7 @@ class AuthViewModel(
     pref: UserPreferences
 ) : ViewModel() {
 
+    var preferences = pref
     var isLoading = repository.isLoading
 
     fun register(registerData: RegisterBodyRequest): LiveData<GenericResponse<User>> {

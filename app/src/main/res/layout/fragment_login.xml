@@ -102,7 +102,7 @@
         app:layout_constraintEnd_toStartOf="@id/register_button"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_register"
+        android:id="@+id/button_login"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
@@ -114,5 +114,29 @@
         app:layout_constraintTop_toBottomOf="@id/register_button"
         app:layout_constraintStart_toStartOf="@id/password_input"
         app:layout_constraintEnd_toEndOf="@id/password_input"/>
+
+    <TextView
+        android:id="@+id/loadingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/loading"
+        android:textSize="16sp"
+        android:textColor="@color/primary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/progress_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="8dp" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:indeterminate="true"
+        android:progressTint="@color/primary"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

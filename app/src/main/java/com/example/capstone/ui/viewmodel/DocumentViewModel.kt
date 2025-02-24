@@ -2,12 +2,17 @@ package com.example.capstone.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.example.capstone.data.local.UserPreferences
 import com.example.capstone.data.model.Document
 import com.example.capstone.data.repository.DocumentRepository
 import com.example.capstone.data.response.GenericResponse
 
-class DocumentViewModel(private val repository: DocumentRepository) : ViewModel() {
+class DocumentViewModel(
+    private val repository: DocumentRepository,
+    private val pref: UserPreferences
+) : ViewModel() {
 
+    val preferences = pref
     val isLoading: LiveData<Boolean> = repository.isLoading
 
     fun getUserDocuments(userId: String): LiveData<GenericResponse<List<Document>>> {

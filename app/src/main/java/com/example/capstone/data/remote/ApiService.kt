@@ -61,6 +61,11 @@ interface ApiService {
     @GET("job/")
     fun getAllJobs(): Call<GenericResponse<List<Lowongan>>>
 
+    @GET("job/{jobId}")
+    fun getJobById(
+        @Path("jobId") jobId: String
+    ): Call<GenericResponse<Lowongan>>
+
     @GET("job/regis/{userId}")
     fun getRegisteredJobs(
         @Path("userId") userId: String

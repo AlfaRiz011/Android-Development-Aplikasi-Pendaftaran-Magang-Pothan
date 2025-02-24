@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/nav_job"
+        android:id="@+id/menu_job"
         android:icon="@drawable/icon_home"
         android:title="@string/lowongan"/>
 
     <item
-        android:id="@+id/nav_status"
+        android:id="@+id/menu_status"
         android:icon="@drawable/icon_list"
         android:title="@string/status"/>
 
     <item
-        android:id="@+id/nav_profile"
+        android:id="@+id/menu_profile"
         android:icon="@drawable/icon_profile"
         android:title="@string/profile"/>
 

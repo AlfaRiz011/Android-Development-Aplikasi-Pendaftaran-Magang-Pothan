@@ -1,60 +1,113 @@
 package com.example.capstone.ui.fragment
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.activityViewModels
 import com.example.capstone.R
+import com.example.capstone.data.request.RegisterBodyRequest
+import com.example.capstone.databinding.FragmentCompleteDataBinding
+import com.example.capstone.ui.viewmodel.AuthViewModel
+import com.example.capstone.ui.viewmodel.factory.AuthViewModelFactory
+import com.example.capstone.utils.Helper
+import java.util.Calendar
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CompleteDataFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CompleteDataFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private lateinit var binding: FragmentCompleteDataBinding
+
+    private val viewModel: AuthViewModel by activityViewModels {
+        AuthViewModelFactory.getInstance(requireContext().applicationContext)
     }
+
+    private var email: String? = null
+    private var password: String? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_complete_data, container, false)
+    ): View {
+        binding = FragmentCompleteDataBinding.inflate(layoutInflater)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CompleteDataFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CompleteDataFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        email = arguments?.getString("email")
+        password = arguments?.getString("password")
+
+        setView()
+    }
+
+    private fun setView() {
+        binding.apply {
+
+            backButton.setOnClickListener {
+                requireActivity().onBackPressed()
+            }
+
+            tanggalLahirInput.setOnClickListener {
+                val calendar = Calendar.getInstance()
+                val year = calendar.get(Calendar.YEAR)
+                val month = calendar.get(Calendar.MONTH)
+                val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+                val datePicker = DatePickerDialog(
+                    requireContext(),
+                    { _, selectedYear, selectedMonth, selectedDay ->
+                        val formattedDate = "$selectedDay/${selectedMonth + 1}/$selectedYear"
+                        tanggalLahirInput.setText(formattedDate)
+                    },
+                    year,
+                    month,
+                    day
+                )
+
+                datePicker.show()
+            }
+
+            val dataRegister = RegisterBodyRequest(
+                email = email,
+                password = password,
+                nim = nimInput.text.toString(),
+                nama = namaInput.text.toString(),
+                universitas = asalKampusInput.text.toString(),
+                noTelp = noHandponeInput.text.toString(),
+                tanggalLahir = tanggalLahirInput.text.toString(),
+                alamat = alamatInput.text.toString()
+            )
+
+            viewModel.register(dataRegister).observe(requireActivity()) { response ->
+                when (response.status) {
+                    "success" -> {
+                        val nextFragment = LoginFragment().apply {
+                            arguments = Bundle().apply {
+                                putString("email", email)
+                                putString("password", password)
+                            }
+                        }
+
+                        parentFragmentManager.beginTransaction()
+                            .setCustomAnimations(
+                                R.anim.slide_in_right,
+                                R.anim.slide_out_left,
+                                R.anim.slide_in_left,
+                                R.anim.slide_out_right
+                            )
+                            .replace(R.id.fragment_container_auth, nextFragment)
+                            .addToBackStack(null)
+                            .commit()
+                    }
+
+                    else -> Helper.handleError(requireContext(), response.message?.toInt())
                 }
             }
+        }
     }
 }
