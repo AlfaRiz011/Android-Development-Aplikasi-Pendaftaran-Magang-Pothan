@@ -30,9 +30,9 @@ class HomeActivity : AppCompatActivity() {
     private fun setupNavBar() {
         binding.navBottomUser.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.nav_job -> setFragment(LowonganFragment())
-                R.id.nav_status -> setFragment(StatusFragment())
-                R.id.nav_profile -> setFragment(ProfileFragment())
+                R.id.menu_job -> setFragment(LowonganFragment())
+                R.id.menu_status -> setFragment(StatusFragment())
+                R.id.menu_profile -> setFragment(ProfileFragment())
             }
             true
         }

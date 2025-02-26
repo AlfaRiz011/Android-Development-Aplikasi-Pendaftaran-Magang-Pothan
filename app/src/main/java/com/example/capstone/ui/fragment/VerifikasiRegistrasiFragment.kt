@@ -5,56 +5,72 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.R
+import com.example.capstone.databinding.FragmentVerifikasiRegistrasiBinding
+import com.example.capstone.ui.adapter.ListDocumentAdminAdapter
+import com.example.capstone.ui.adapter.ListLowonganAdminAdapter
+import com.example.capstone.ui.viewmodel.DocumentViewModel
+import com.example.capstone.ui.viewmodel.JobViewModel
+import com.example.capstone.ui.viewmodel.factory.DocumentViewModelFactory
+import com.example.capstone.ui.viewmodel.factory.JobViewModelFactory
+import com.example.capstone.utils.Helper
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [VerifikasiRegistrasiFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class VerifikasiRegistrasiFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private lateinit var binding : FragmentVerifikasiRegistrasiBinding
+
+    private lateinit var adapter: ListLowonganAdminAdapter
+
+    val viewModel: JobViewModel by activityViewModels {
+        JobViewModelFactory.getInstance(requireContext().applicationContext)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_verifikasi_registrasi, container, false)
+    ): View {
+        binding = FragmentVerifikasiRegistrasiBinding.inflate(layoutInflater)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment VerifikasiRegistrasiFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            VerifikasiRegistrasiFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.isLoading.observe(requireActivity()) {
+            binding.apply {
+                Helper.showAdminLoading(progressBar, it)
             }
+        }
+
+        setAdapter()
     }
+
+    private fun setAdapter() {
+        viewModel.getAllRequested().observe(requireActivity()) { response ->
+            when (response.status) {
+                "success" -> {
+                    val data = response.data
+
+                    binding.apply {
+                        if (data.isNullOrEmpty()) {
+                            noData.visibility = View.VISIBLE
+                        } else {
+                            rvVerifikasiRegistrasi.visibility = View.VISIBLE
+                            noData.visibility = View.GONE
+                            adapter = ListLowonganAdminAdapter(data)
+                            val layoutManager = LinearLayoutManager(requireContext())
+                            rvVerifikasiRegistrasi.layoutManager = layoutManager
+                            rvVerifikasiRegistrasi.adapter = adapter
+                        }
+                    }
+                }
+
+                else -> Helper.handleError(requireContext(), response.message?.toInt())
+            }
+        }
+    }
+
+
 }

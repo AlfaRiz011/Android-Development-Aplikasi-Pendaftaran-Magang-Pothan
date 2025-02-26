@@ -14,6 +14,7 @@ import com.example.capstone.databinding.FragmentCompleteDataBinding
 import com.example.capstone.ui.viewmodel.AuthViewModel
 import com.example.capstone.ui.viewmodel.factory.AuthViewModelFactory
 import com.example.capstone.utils.Helper
+import com.example.capstone.utils.Helper.showAdminLoading
 import java.util.Calendar
 
 class CompleteDataFragment : Fragment() {
@@ -42,11 +43,19 @@ class CompleteDataFragment : Fragment() {
         email = arguments?.getString("email")
         password = arguments?.getString("password")
 
+        viewModel.isLoading.observe(requireActivity()) {
+            binding.apply {
+                showAdminLoading(progressBar, it)
+            }
+        }
+
         setView()
     }
 
     private fun setView() {
         binding.apply {
+
+            emailInput.setText(email)
 
             backButton.setOnClickListener {
                 requireActivity().onBackPressed()
@@ -72,40 +81,43 @@ class CompleteDataFragment : Fragment() {
                 datePicker.show()
             }
 
-            val dataRegister = RegisterBodyRequest(
-                email = email,
-                password = password,
-                nim = nimInput.text.toString(),
-                nama = namaInput.text.toString(),
-                universitas = asalKampusInput.text.toString(),
-                noTelp = noHandponeInput.text.toString(),
-                tanggalLahir = tanggalLahirInput.text.toString(),
-                alamat = alamatInput.text.toString()
-            )
 
-            viewModel.register(dataRegister).observe(requireActivity()) { response ->
-                when (response.status) {
-                    "success" -> {
-                        val nextFragment = LoginFragment().apply {
-                            arguments = Bundle().apply {
-                                putString("email", email)
-                                putString("password", password)
+            buttonRegistrasi.setOnClickListener {
+                val dataRegister = RegisterBodyRequest(
+                    email = email,
+                    password = password,
+                    nim = nimInput.text.toString(),
+                    nama = namaInput.text.toString(),
+                    universitas = asalKampusInput.text.toString(),
+                    noTelp = noHandponeInput.text.toString(),
+                    tanggalLahir = tanggalLahirInput.text.toString(),
+                    alamat = alamatInput.text.toString()
+                )
+
+                viewModel.register(dataRegister).observe(requireActivity()) { response ->
+                    when (response.status) {
+                        "success" -> {
+                            val nextFragment = LoginFragment().apply {
+                                arguments = Bundle().apply {
+                                    putString("email", email)
+                                    putString("password", password)
+                                }
                             }
+
+                            parentFragmentManager.beginTransaction()
+                                .setCustomAnimations(
+                                    R.anim.slide_in_right,
+                                    R.anim.slide_out_left,
+                                    R.anim.slide_in_left,
+                                    R.anim.slide_out_right
+                                )
+                                .replace(R.id.fragment_container_auth, nextFragment)
+                                .addToBackStack(null)
+                                .commit()
                         }
 
-                        parentFragmentManager.beginTransaction()
-                            .setCustomAnimations(
-                                R.anim.slide_in_right,
-                                R.anim.slide_out_left,
-                                R.anim.slide_in_left,
-                                R.anim.slide_out_right
-                            )
-                            .replace(R.id.fragment_container_auth, nextFragment)
-                            .addToBackStack(null)
-                            .commit()
+                        else -> Helper.handleError(requireContext(), response.message?.toInt())
                     }
-
-                    else -> Helper.handleError(requireContext(), response.message?.toInt())
                 }
             }
         }

@@ -21,6 +21,10 @@ class JobViewModel(
         return jobRepository.getAllJobs()
     }
 
+    fun getAllRequested(): LiveData<GenericResponse<List<JobApply>>> {
+        return jobRepository.getAllRequested()
+    }
+
     fun getJobById(jobId: String): LiveData<GenericResponse<Lowongan>> {
         return jobRepository.getJobById(jobId)
     }

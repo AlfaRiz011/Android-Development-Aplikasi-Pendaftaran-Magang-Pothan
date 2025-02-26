@@ -3,21 +3,18 @@ package com.example.capstone.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.capstone.R
 import com.example.capstone.data.local.UserPreferences
 import com.example.capstone.databinding.ActivityDetailBinding
 import com.example.capstone.ui.viewmodel.JobViewModel
 import com.example.capstone.ui.viewmodel.UserViewModel
 import com.example.capstone.ui.viewmodel.factory.JobViewModelFactory
 import com.example.capstone.ui.viewmodel.factory.UserViewModelFactory
+import com.example.capstone.utils.Helper
 import com.example.capstone.utils.Helper.handleError
+import com.example.capstone.utils.Helper.showLoading
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
@@ -28,7 +25,7 @@ class DetailActivity : AppCompatActivity() {
     private var jobId: String? = null
 
     private val viewModel: JobViewModel by viewModels {
-        JobViewModelFactory.getInstance(this)
+        JobViewModelFactory.getInstance(this@DetailActivity)
     }
 
     private val userViewModel: UserViewModel by viewModels {
@@ -40,12 +37,26 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_detail)
+        setContentView(binding.root)
+
+        pref = viewModel.preferences
 
         jobId = intent.getStringExtra("jobId") ?: ""
 
         lifecycleScope.launch {
             val userId = pref.getUser().firstOrNull()?.id.toString()
+
+            viewModel.isLoading.observe(this@DetailActivity) {
+                binding.apply {
+                    showLoading(progressBar, loadingView, it)
+                }
+            }
+
+            userViewModel.isLoading.observe(this@DetailActivity) {
+                binding.apply {
+                    showLoading(progressBar, loadingView, it)
+                }
+            }
 
             setView(jobId, userId)
             setActionButtons(jobId, userId)
@@ -110,7 +121,7 @@ class DetailActivity : AppCompatActivity() {
                                 val job = response.data
 
                                 namaPosisi.text = job.posisi
-                                divisi.text = job.jabatan
+                                divisi2.text = job.jabatan
                                 periodeValue.text = job.periodeMagang
                                 waktuTutupValue.text = job.closedAt
                                 deskripsiValue.text = job.deskripsi

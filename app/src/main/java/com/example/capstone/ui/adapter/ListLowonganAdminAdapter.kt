@@ -9,6 +9,7 @@ import com.example.capstone.data.model.Lowongan
 import com.example.capstone.databinding.ItemLowonganBinding
 import com.example.capstone.databinding.ItemVerifikasiRegistrasiBinding
 import com.example.capstone.ui.activity.DetailActivity
+import com.example.capstone.ui.activity.DetailRegistrasiActivity
 
 class ListLowonganAdminAdapter(private val listRegistrasi: List<JobApply>) : RecyclerView.Adapter<ListLowonganAdminAdapter.ItemViewHolder>() {
     inner class ItemViewHolder(val binding: ItemVerifikasiRegistrasiBinding) : RecyclerView.ViewHolder(binding.root)
@@ -21,6 +22,19 @@ class ListLowonganAdminAdapter(private val listRegistrasi: List<JobApply>) : Rec
     override fun onBindViewHolder(holder: ListLowonganAdminAdapter.ItemViewHolder, position: Int) {
         val regis = listRegistrasi[position]
 
+        holder.binding.apply{
+            namaPendaftar.text = regis.user?.nama
+            divisi.text = regis.lowongan?.jabatan
+            email.text = regis.user?.email
+            phone.text = regis.user?.noTelp
+
+            itemVerifRegister.setOnClickListener {
+                val intent = Intent(root.context, DetailRegistrasiActivity::class.java).apply {
+                    putExtra("regisId", regis.id)
+                }
+                root.context.startActivity(intent)
+            }
+        }
     }
 
     override fun getItemCount(): Int = listRegistrasi.size

@@ -17,6 +17,8 @@ import com.example.capstone.ui.adapter.ListStatusUserAdapter
 import com.example.capstone.ui.viewmodel.UserViewModel
 import com.example.capstone.ui.viewmodel.factory.JobViewModelFactory
 import com.example.capstone.ui.viewmodel.factory.UserViewModelFactory
+import com.example.capstone.utils.Helper
+import com.example.capstone.utils.Helper.showLoading
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 

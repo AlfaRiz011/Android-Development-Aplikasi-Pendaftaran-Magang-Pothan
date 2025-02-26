@@ -49,6 +49,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
+        android:paddingHorizontal="20dp"
         android:inputType="textEmailAddress"
         android:background="@drawable/shape_edit_text"
         app:layout_constraintTop_toBottomOf="@id/email_title"
@@ -72,6 +73,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
+        android:paddingHorizontal="20dp"
         android:inputType="textPassword"
         android:background="@drawable/shape_edit_text"
         app:layout_constraintTop_toBottomOf="@id/password_title"
@@ -135,6 +137,7 @@
         android:indeterminate="true"
         android:progressTint="@color/primary"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

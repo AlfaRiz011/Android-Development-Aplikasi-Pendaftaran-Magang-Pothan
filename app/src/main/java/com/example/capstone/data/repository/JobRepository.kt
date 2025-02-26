@@ -52,6 +52,38 @@ class JobRepository(
         return resultLiveData
     }
 
+    fun getAllRequested(): LiveData<GenericResponse<List<JobApply>>> {
+        _isLoading.value = true
+        val resultLiveData = MutableLiveData<GenericResponse<List<JobApply>>>()
+        apiService.getAllRequested().enqueue(object : Callback<GenericResponse<List<JobApply>>> {
+            override fun onResponse(
+                call: Call<GenericResponse<List<JobApply>>>,
+                response: Response<GenericResponse<List<JobApply>>>
+            ) {
+                resultLiveData.value = if (response.isSuccessful) {
+                    response.body()
+                } else {
+                    GenericResponse(
+                        message = response.code().toString(),
+                        status = response.body()?.status,
+                        data = null
+                    )
+                }
+                _isLoading.value = false
+            }
+
+            override fun onFailure(call: Call<GenericResponse<List<JobApply>>>, t: Throwable) {
+                resultLiveData.value = GenericResponse(
+                    message = "500",
+                    status = "error",
+                    data = null
+                )
+                _isLoading.value = false
+            }
+        })
+        return resultLiveData
+    }
+
     fun getJobById(jobId: String): LiveData<GenericResponse<Lowongan>> {
         _isLoading.value = true
         val resultLiveData = MutableLiveData<GenericResponse<Lowongan>>()

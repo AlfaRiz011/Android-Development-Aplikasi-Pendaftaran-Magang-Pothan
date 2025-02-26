@@ -60,6 +60,7 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:clickable="false"
+            android:paddingHorizontal="20dp"
             android:background="@drawable/shape_edit_text"
             app:layout_constraintTop_toBottomOf="@id/email_title"
             app:layout_constraintStart_toStartOf="@id/email_title"
@@ -83,6 +84,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:inputType="textPersonName"
+            android:paddingHorizontal="20dp"
             android:background="@drawable/shape_edit_text"
             app:layout_constraintTop_toBottomOf="@id/nama_title"
             app:layout_constraintStart_toStartOf="@id/nama_title"
@@ -106,6 +108,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:inputType="text"
+            android:paddingHorizontal="20dp"
             android:background="@drawable/shape_edit_text"
             app:layout_constraintTop_toBottomOf="@id/asal_kampus_title"
             app:layout_constraintStart_toStartOf="@id/asal_kampus_title"
@@ -128,6 +131,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
+            android:paddingHorizontal="20dp"
             android:inputType="number"
             android:background="@drawable/shape_edit_text"
             app:layout_constraintTop_toBottomOf="@id/nim_title"
@@ -151,6 +155,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
+            android:paddingHorizontal="20dp"
             android:inputType="date"
             android:background="@drawable/shape_edit_text"
             android:focusableInTouchMode="false"
@@ -175,6 +180,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
+            android:paddingHorizontal="20dp"
             android:inputType="text"
             android:background="@drawable/shape_edit_text"
             app:layout_constraintTop_toBottomOf="@id/alamat_title"
@@ -198,6 +204,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
+            android:paddingHorizontal="20dp"
             android:inputType="phone"
             android:background="@drawable/shape_edit_text"
             app:layout_constraintTop_toBottomOf="@id/no_handpone_title"
@@ -209,6 +216,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:backgroundTint="@color/primary"
             android:text="@string/registrasi"
             android:textColor="@color/white"
@@ -217,6 +225,17 @@
             app:layout_constraintEnd_toEndOf="@id/no_handpone_input"
             app:layout_constraintStart_toStartOf="@id/no_handpone_input"
             app:layout_constraintTop_toBottomOf="@id/no_handpone_input" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/primary"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/button_registrasi"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

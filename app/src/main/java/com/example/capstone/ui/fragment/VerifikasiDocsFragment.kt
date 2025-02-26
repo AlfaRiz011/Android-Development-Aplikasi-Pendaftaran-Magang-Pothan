@@ -5,56 +5,72 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.R
+import com.example.capstone.databinding.FragmentVerifikasiDocsBinding
+import com.example.capstone.ui.adapter.ListDocumentAdminAdapter
+import com.example.capstone.ui.adapter.ListLowonganUserAdapter
+import com.example.capstone.ui.viewmodel.DocumentViewModel
+import com.example.capstone.ui.viewmodel.JobViewModel
+import com.example.capstone.ui.viewmodel.factory.DocumentViewModelFactory
+import com.example.capstone.ui.viewmodel.factory.JobViewModelFactory
+import com.example.capstone.utils.Helper
+import com.example.capstone.utils.Helper.handleError
+import com.example.capstone.utils.Helper.showAdminLoading
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [VerifikasiDocsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class VerifikasiDocsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private lateinit var binding: FragmentVerifikasiDocsBinding
+
+    private lateinit var adapter: ListDocumentAdminAdapter
+
+    private val viewModel: DocumentViewModel by activityViewModels {
+        DocumentViewModelFactory.getInstance(requireContext().applicationContext)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_verifikasi_docs, container, false)
+    ): View {
+        binding = FragmentVerifikasiDocsBinding.inflate(layoutInflater)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment VerifikasiDocsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            VerifikasiDocsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.isLoading.observe(requireActivity()) {
+            binding.apply {
+                showAdminLoading(progressBar, it)
             }
+        }
+
+        setAdapter()
+    }
+
+    private fun setAdapter() {
+        viewModel.getAllDocument().observe(requireActivity()) { response ->
+            when (response.status) {
+                "success" -> {
+                    val data = response.data
+
+                    binding.apply {
+                        if (data.isNullOrEmpty()) {
+                            noData.visibility = View.VISIBLE
+                        } else {
+                            rvVerifikasiDocs.visibility = View.VISIBLE
+                            noData.visibility = View.GONE
+                            adapter = ListDocumentAdminAdapter(data)
+                            val layoutManager = LinearLayoutManager(requireContext())
+                            rvVerifikasiDocs.layoutManager = layoutManager
+                            rvVerifikasiDocs.adapter = adapter
+                        }
+                    }
+                }
+
+                else -> handleError(requireContext(), response.message?.toInt())
+            }
+        }
     }
 }

@@ -14,7 +14,9 @@ import com.example.capstone.data.model.User
 import com.example.capstone.databinding.FragmentStatusBinding
 import com.example.capstone.ui.adapter.ListStatusUserAdapter
 import com.example.capstone.ui.viewmodel.factory.JobViewModelFactory
+import com.example.capstone.utils.Helper
 import com.example.capstone.utils.Helper.handleError
+import com.example.capstone.utils.Helper.showLoading
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
@@ -42,6 +44,12 @@ class StatusFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         pref = viewModel.preferences
 
+        viewModel.isLoading.observe(requireActivity()) {
+            binding.apply {
+                showLoading(progressBar, loadingView, it)
+            }
+        }
+
         lifecycleScope.launch {
             val user = pref.getUser().firstOrNull()
             setAdapter(user)
@@ -58,7 +66,6 @@ class StatusFragment : Fragment() {
                     binding.apply {
                         if (data.isNullOrEmpty()) {
                             noData.visibility = View.VISIBLE
-                            rvStatus.visibility = View.GONE
                         } else {
                             rvStatus.visibility = View.VISIBLE
                             noData.visibility = View.GONE

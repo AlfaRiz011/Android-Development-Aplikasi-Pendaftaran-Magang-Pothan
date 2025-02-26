@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.databinding.FragmentLowonganBinding
 import com.example.capstone.ui.adapter.ListLowonganUserAdapter
 import com.example.capstone.ui.viewmodel.factory.JobViewModelFactory
+import com.example.capstone.utils.Helper
 import com.example.capstone.utils.Helper.handleError
+import com.example.capstone.utils.Helper.showLoading
 
 class LowonganFragment : Fragment() {
 
@@ -34,6 +36,12 @@ class LowonganFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.isLoading.observe(requireActivity()) {
+            binding.apply {
+                showLoading(progressBar, loadingView, it)
+            }
+        }
+
         setAdapter()
     }
 
@@ -46,7 +54,6 @@ class LowonganFragment : Fragment() {
                     binding.apply {
                         if (data.isNullOrEmpty()) {
                             noData.visibility = View.VISIBLE
-                            rvLowongan.visibility = View.GONE
                         } else {
                             rvLowongan.visibility = View.VISIBLE
                             noData.visibility = View.GONE

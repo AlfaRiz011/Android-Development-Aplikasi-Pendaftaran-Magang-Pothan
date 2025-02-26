@@ -19,6 +19,10 @@ class DocumentViewModel(
         return repository.getUserDocuments(userId)
     }
 
+    fun getAllDocument(): LiveData<GenericResponse<List<Document>>> {
+        return repository.getAllDocuments()
+    }
+
     fun getVerifiedDocument(dokumId: String): LiveData<GenericResponse<Document>> {
         return repository.getVerifiedDocument(dokumId)
     }

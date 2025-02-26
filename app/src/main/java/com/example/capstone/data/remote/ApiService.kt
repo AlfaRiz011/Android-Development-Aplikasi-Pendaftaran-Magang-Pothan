@@ -15,6 +15,7 @@ import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
@@ -34,7 +35,7 @@ interface ApiService {
         @Body checkBodyRequest: RegisterBodyRequest
     ): Call<GenericResponse<User>>
 
-    @POST("login/")
+    @POST("auth/login/")
     fun login(
         @Body loginRequest: LoginBodyRequest
     ): Call<GenericResponse<Login>>
@@ -51,15 +52,20 @@ interface ApiService {
         @Query("jobId") jobId: String
     ): Call<GenericResponse<User>>
 
+    @Multipart
     @POST("user/upload/{userId}")
     fun uploadDocUser(
         @Path("userId") userId: String,
+        @Query("jenis_dokumen") jenisDokumen: String,
         @Part file: MultipartBody.Part?
     ): Call<GenericResponse<Document>>
 
     // JOB
     @GET("job/")
     fun getAllJobs(): Call<GenericResponse<List<Lowongan>>>
+
+    @GET("job/all")
+    fun getAllRequested(): Call<GenericResponse<List<JobApply>>>
 
     @GET("job/{jobId}")
     fun getJobById(
@@ -99,6 +105,9 @@ interface ApiService {
     fun getUserDocuments(
         @Path("userId") userId: String
     ): Call<GenericResponse<List<Document>>>
+
+    @GET("document/{userId}")
+    fun getAllDocument(): Call<GenericResponse<List<Document>>>
 
     @GET("document/dokum/{dokumId}")
     fun getVerifiedDocument(

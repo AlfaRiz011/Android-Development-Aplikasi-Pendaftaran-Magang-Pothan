@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".ui.activity.DetailActivity">
 
@@ -58,7 +59,7 @@
 
         <TextView
             android:id="@+id/nama_posisi"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="50dp"
@@ -87,7 +88,7 @@
 
         <TextView
             android:id="@+id/divisi2"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="4dp"
@@ -97,8 +98,8 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20sp"
+            android:paddingHorizontal="20dp"
             app:layout_constraintBottom_toBottomOf="@id/divisi"
-            app:layout_constraintEnd_toEndOf="@id/nama_posisi"
             app:layout_constraintStart_toEndOf="@id/divisi"
             app:layout_constraintTop_toTopOf="@id/divisi" />
 
@@ -207,14 +208,14 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            app:icon="@drawable/icon_approve"
-            app:iconGravity="textStart"
             android:backgroundTint="@color/green"
             android:text="@string/diterima"
             android:textColor="@color/white"
             android:textSize="17sp"
-            app:cornerRadius="10dp"
             android:visibility="gone"
+            app:cornerRadius="10dp"
+            app:icon="@drawable/icon_approve"
+            app:iconGravity="textStart"
             app:layout_constraintEnd_toEndOf="@id/deskripsi_value"
             app:layout_constraintStart_toStartOf="@id/deskripsi_value"
             app:layout_constraintTop_toBottomOf="@id/deskripsi_value" />
@@ -224,18 +225,39 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            app:icon="@drawable/icon_pending"
-            app:iconGravity="textStart"
             android:backgroundTint="@color/yellow"
             android:text="@string/pending"
             android:textColor="@color/white"
             android:textSize="17sp"
-            app:cornerRadius="10dp"
             android:visibility="gone"
+            app:cornerRadius="10dp"
+            app:icon="@drawable/icon_pending"
+            app:iconGravity="textStart"
             app:layout_constraintEnd_toEndOf="@id/deskripsi_value"
             app:layout_constraintStart_toStartOf="@id/deskripsi_value"
             app:layout_constraintTop_toBottomOf="@id/deskripsi_value" />
 
+        <View
+            android:id="@+id/loading_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/primary"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

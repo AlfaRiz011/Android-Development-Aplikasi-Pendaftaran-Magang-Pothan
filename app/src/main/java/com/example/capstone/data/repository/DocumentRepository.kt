@@ -45,6 +45,32 @@ class DocumentRepository(
         return resultLiveData
     }
 
+    fun getAllDocuments(): LiveData<GenericResponse<List<Document>>> {
+        _isLoading.value = true
+        val resultLiveData = MutableLiveData<GenericResponse<List<Document>>>()
+        apiService.getAllDocument()
+            .enqueue(object : Callback<GenericResponse<List<Document>>> {
+                override fun onResponse(
+                    call: Call<GenericResponse<List<Document>>>,
+                    response: Response<GenericResponse<List<Document>>>
+                ) {
+                    resultLiveData.value = response.body() ?: GenericResponse(
+                        message = response.code().toString(),
+                        status = "error",
+                        data = null
+                    )
+                    _isLoading.value = false
+                }
+
+                override fun onFailure(call: Call<GenericResponse<List<Document>>>, t: Throwable) {
+                    resultLiveData.value =
+                        GenericResponse(message = "500", status = "error", data = null)
+                    _isLoading.value = false
+                }
+            })
+        return resultLiveData
+    }
+
     fun getVerifiedDocument(dokumId: String): LiveData<GenericResponse<Document>> {
         _isLoading.value = true
         val resultLiveData = MutableLiveData<GenericResponse<Document>>()

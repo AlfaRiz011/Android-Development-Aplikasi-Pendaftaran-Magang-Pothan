@@ -2,6 +2,7 @@ package com.example.capstone.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.capstone.data.local.UserPreferences
 import com.example.capstone.data.model.Login
 import com.example.capstone.data.model.Register
@@ -10,6 +11,9 @@ import com.example.capstone.data.repository.AuthRepository
 import com.example.capstone.data.request.LoginBodyRequest
 import com.example.capstone.data.request.RegisterBodyRequest
 import com.example.capstone.data.response.GenericResponse
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 
 class AuthViewModel(
     private val repository: AuthRepository,
@@ -18,6 +22,9 @@ class AuthViewModel(
 
     var preferences = pref
     var isLoading = repository.isLoading
+
+    val role: StateFlow<String?> = pref.getRole()
+        .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     fun register(registerData: RegisterBodyRequest): LiveData<GenericResponse<User>> {
         return repository.register(registerData)

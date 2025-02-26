@@ -85,11 +85,12 @@ class UserRepository(
 
     fun uploadDocUser(
         userId: String,
+        jenisDokumen: String,
         file: MultipartBody.Part?
     ): LiveData<GenericResponse<Document>> {
         _isLoading.value = true
         val resultLiveData = MutableLiveData<GenericResponse<Document>>()
-        apiService.uploadDocUser(userId, file)
+        apiService.uploadDocUser(userId = userId, jenisDokumen = jenisDokumen, file = file)
             .enqueue(object : Callback<GenericResponse<Document>> {
                 override fun onResponse(
                     call: Call<GenericResponse<Document>>,

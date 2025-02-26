@@ -27,8 +27,9 @@ class UserViewModel(
 
     fun uploadDocUser(
         userId: String,
+        jenisDokumen: String,
         file: MultipartBody.Part?
     ): LiveData<GenericResponse<Document>> {
-        return repository.uploadDocUser(userId, file)
+        return repository.uploadDocUser(userId, jenisDokumen, file)
     }
 }
