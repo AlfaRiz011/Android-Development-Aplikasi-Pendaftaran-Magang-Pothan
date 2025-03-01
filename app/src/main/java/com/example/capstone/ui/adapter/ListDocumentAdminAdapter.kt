@@ -28,7 +28,7 @@ class ListDocumentAdminAdapter(private val listDocument: List<Document>) : Recyc
             phone.text = docs.user?.noTelp
             itemVerifDocs.setOnClickListener {
                 val intent = Intent(root.context, DetailDocsActivity::class.java).apply {
-                    putExtra("docsId", docs.id)
+                    putExtra("docsId", docs.id.toString())
                 }
                 root.context.startActivity(intent)
             }

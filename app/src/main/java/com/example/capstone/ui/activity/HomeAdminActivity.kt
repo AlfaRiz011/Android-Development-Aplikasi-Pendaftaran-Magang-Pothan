@@ -1,5 +1,6 @@
 package com.example.capstone.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,8 @@ import com.example.capstone.ui.fragment.ProfileFragment
 import com.example.capstone.ui.fragment.StatusFragment
 import com.example.capstone.ui.fragment.VerifikasiDocsFragment
 import com.example.capstone.ui.fragment.VerifikasiRegistrasiFragment
+import com.example.capstone.utils.Helper
+import com.example.capstone.utils.Helper.showToast
 
 class HomeAdminActivity : AppCompatActivity() {
     private lateinit var binding : ActivityHomeAdminBinding
@@ -20,9 +23,27 @@ class HomeAdminActivity : AppCompatActivity() {
         binding = ActivityHomeAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val uploadSuccess = intent.getBooleanExtra("UPLOAD_SUCCESS", false)
+
         setOnBackPressedHandler()
         setupNavBar()
         setFragment(VerifikasiRegistrasiFragment())
+        setView()
+        checkUpload(uploadSuccess)
+    }
+
+    private fun setView() {
+        binding.apply {
+            buttonAdd.setOnClickListener {
+                startActivity(Intent(this@HomeAdminActivity, AddLowonganActivity::class.java))
+            }
+        }
+    }
+
+    private fun checkUpload(uploadSuccess: Boolean) {
+        if (uploadSuccess) {
+            showToast(this@HomeAdminActivity, "Lowongan berhasil dibuat")
+        }
     }
 
     private fun setupNavBar() {

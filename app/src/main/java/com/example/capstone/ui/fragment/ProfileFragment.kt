@@ -12,6 +12,7 @@ import com.example.capstone.R
 import com.example.capstone.data.local.UserPreferences
 import com.example.capstone.data.model.User
 import com.example.capstone.databinding.FragmentProfileBinding
+import com.example.capstone.ui.activity.AuthActivity
 import com.example.capstone.ui.activity.DocumentActivity
 import com.example.capstone.ui.adapter.ListStatusUserAdapter
 import com.example.capstone.ui.viewmodel.UserViewModel
@@ -19,6 +20,7 @@ import com.example.capstone.ui.viewmodel.factory.JobViewModelFactory
 import com.example.capstone.ui.viewmodel.factory.UserViewModelFactory
 import com.example.capstone.utils.Helper
 import com.example.capstone.utils.Helper.showLoading
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
@@ -67,6 +69,17 @@ class ProfileFragment : Fragment() {
                 val intent = Intent(requireActivity(), DocumentActivity::class.java)
                 intent.putExtra("userId", user?.id.toString())
                 startActivity(intent)
+            }
+
+            buttonLogout.setOnClickListener {
+                lifecycleScope.launch {
+                    pref.logOut()
+
+                    val intent = Intent(requireContext(), AuthActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    requireActivity().finish()
+                }
             }
         }
     }

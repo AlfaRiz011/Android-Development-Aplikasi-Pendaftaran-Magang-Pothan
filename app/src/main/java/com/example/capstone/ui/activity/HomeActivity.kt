@@ -2,16 +2,14 @@ package com.example.capstone.ui.activity
 
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.capstone.R
 import com.example.capstone.databinding.ActivityHomeBinding
 import com.example.capstone.ui.fragment.LowonganFragment
 import com.example.capstone.ui.fragment.ProfileFragment
 import com.example.capstone.ui.fragment.StatusFragment
+import com.example.capstone.utils.Helper.showToast
 
 class HomeActivity : AppCompatActivity() {
 
@@ -22,9 +20,19 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val uploadSuccess = intent.getBooleanExtra("UPLOAD_SUCCESS", false)
+
         setOnBackPressedHandler()
         setupNavBar()
         setFragment(LowonganFragment())
+        checkUpload(uploadSuccess)
+    }
+
+    private fun checkUpload(uploadSuccess: Boolean) {
+        if (uploadSuccess) {
+            setFragment(ProfileFragment())
+            showToast(this@HomeActivity, "Dokumen berhasil diunggah")
+        }
     }
 
     private fun setupNavBar() {

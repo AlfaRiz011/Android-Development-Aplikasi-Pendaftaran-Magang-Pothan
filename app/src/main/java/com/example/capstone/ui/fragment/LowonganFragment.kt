@@ -36,9 +36,11 @@ class LowonganFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.isLoading.observe(requireActivity()) {
-            binding.apply {
-                showLoading(progressBar, loadingView, it)
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (isAdded) {
+                binding.apply {
+                    showLoading(progressBar, loadingView, it)
+                }
             }
         }
 
@@ -46,26 +48,33 @@ class LowonganFragment : Fragment() {
     }
 
     private fun setAdapter() {
-        viewModel.getAllJobs().observe(requireActivity()){response ->
+        viewModel.getAllJobs().observe(viewLifecycleOwner) { response ->
+            if (!isAdded) return@observe
+
             when (response.status) {
                 "success" -> {
                     val data = response.data
-
                     binding.apply {
                         if (data.isNullOrEmpty()) {
                             noData.visibility = View.VISIBLE
+                            rvLowongan.visibility = View.GONE
                         } else {
-                            rvLowongan.visibility = View.VISIBLE
                             noData.visibility = View.GONE
-                            adapter = ListLowonganUserAdapter(data)
-                            val layoutManager = LinearLayoutManager(requireContext())
-                            rvLowongan.layoutManager = layoutManager
-                            rvLowongan.adapter = adapter
+                            rvLowongan.visibility = View.VISIBLE
+
+                            if (!::adapter.isInitialized) {
+                                adapter = ListLowonganUserAdapter(data)
+                                rvLowongan.layoutManager = LinearLayoutManager(requireContext())
+                                rvLowongan.adapter = adapter
+                            }
                         }
                     }
                 }
-
-                else -> handleError(requireContext(), response.message?.toInt())
+                else -> {
+                    if (isAdded) {
+                        handleError(requireContext(), response.message?.toInt())
+                    }
+                }
             }
         }
     }

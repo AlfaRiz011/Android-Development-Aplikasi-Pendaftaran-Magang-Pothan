@@ -64,7 +64,7 @@ interface ApiService {
     @GET("job/")
     fun getAllJobs(): Call<GenericResponse<List<Lowongan>>>
 
-    @GET("job/all")
+    @GET("job/all/request")
     fun getAllRequested(): Call<GenericResponse<List<JobApply>>>
 
     @GET("job/{jobId}")
@@ -83,7 +83,7 @@ interface ApiService {
     @GET("job/regis/verif/{regisId}")
     fun getVerifiedRegistration(
         @Path("regisId") regisId: String
-    ): Call<GenericResponse<PesertaAktif>>
+    ): Call<GenericResponse<JobApply>>
 
     @POST("job/make")
     fun createJob(
@@ -106,7 +106,7 @@ interface ApiService {
         @Path("userId") userId: String
     ): Call<GenericResponse<List<Document>>>
 
-    @GET("document/{userId}")
+    @GET("document/")
     fun getAllDocument(): Call<GenericResponse<List<Document>>>
 
     @GET("document/dokum/{dokumId}")

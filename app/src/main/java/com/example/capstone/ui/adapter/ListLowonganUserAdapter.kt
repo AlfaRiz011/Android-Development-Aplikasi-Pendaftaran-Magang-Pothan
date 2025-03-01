@@ -8,7 +8,7 @@ import com.example.capstone.data.model.Lowongan
 import com.example.capstone.databinding.ItemLowonganBinding
 import com.example.capstone.ui.activity.DetailActivity
 
-class ListLowonganUserAdapter(private val listJob: List<Lowongan>) : RecyclerView.Adapter<ListLowonganUserAdapter.ItemViewHolder>() {
+class ListLowonganUserAdapter(private var listJob: List<Lowongan>) : RecyclerView.Adapter<ListLowonganUserAdapter.ItemViewHolder>() {
     inner class ItemViewHolder(val binding: ItemLowonganBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -35,5 +35,4 @@ class ListLowonganUserAdapter(private val listJob: List<Lowongan>) : RecyclerVie
     }
 
     override fun getItemCount(): Int = listJob.size
-
 }

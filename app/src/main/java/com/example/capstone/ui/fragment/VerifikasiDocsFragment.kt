@@ -18,6 +18,7 @@ import com.example.capstone.ui.viewmodel.factory.JobViewModelFactory
 import com.example.capstone.utils.Helper
 import com.example.capstone.utils.Helper.handleError
 import com.example.capstone.utils.Helper.showAdminLoading
+import com.example.capstone.utils.Helper.showLoading
 
 class VerifikasiDocsFragment : Fragment() {
 
@@ -40,9 +41,11 @@ class VerifikasiDocsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.isLoading.observe(requireActivity()) {
-            binding.apply {
-                showAdminLoading(progressBar, it)
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (isAdded) {
+                binding.apply {
+                    showLoading(progressBar, loadingView, it)
+                }
             }
         }
 
@@ -51,6 +54,8 @@ class VerifikasiDocsFragment : Fragment() {
 
     private fun setAdapter() {
         viewModel.getAllDocument().observe(requireActivity()) { response ->
+            if (!isAdded) return@observe
+
             when (response.status) {
                 "success" -> {
                     val data = response.data
@@ -61,10 +66,11 @@ class VerifikasiDocsFragment : Fragment() {
                         } else {
                             rvVerifikasiDocs.visibility = View.VISIBLE
                             noData.visibility = View.GONE
-                            adapter = ListDocumentAdminAdapter(data)
-                            val layoutManager = LinearLayoutManager(requireContext())
-                            rvVerifikasiDocs.layoutManager = layoutManager
-                            rvVerifikasiDocs.adapter = adapter
+                            if (!::adapter.isInitialized) {
+                                adapter = ListDocumentAdminAdapter(data)
+                                rvVerifikasiDocs.layoutManager = LinearLayoutManager(requireContext())
+                                rvVerifikasiDocs.adapter = adapter
+                            }
                         }
                     }
                 }

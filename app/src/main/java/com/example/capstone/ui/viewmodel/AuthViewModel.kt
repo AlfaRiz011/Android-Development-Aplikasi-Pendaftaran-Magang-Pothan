@@ -23,9 +23,6 @@ class AuthViewModel(
     var preferences = pref
     var isLoading = repository.isLoading
 
-    val role: StateFlow<String?> = pref.getRole()
-        .stateIn(viewModelScope, SharingStarted.Lazily, null)
-
     fun register(registerData: RegisterBodyRequest): LiveData<GenericResponse<User>> {
         return repository.register(registerData)
     }

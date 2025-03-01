@@ -15,6 +15,7 @@ import com.example.capstone.data.local.UserPreferences
 import com.example.capstone.data.local.dataStore
 import com.example.capstone.data.request.LoginBodyRequest
 import com.example.capstone.databinding.FragmentLoginBinding
+import com.example.capstone.ui.activity.AccountSessionActivity
 import com.example.capstone.ui.activity.HomeActivity
 import com.example.capstone.ui.activity.HomeAdminActivity
 import com.example.capstone.ui.viewmodel.AuthViewModel
@@ -22,6 +23,7 @@ import com.example.capstone.ui.viewmodel.factory.AuthViewModelFactory
 import com.example.capstone.utils.Helper.handleError
 import com.example.capstone.utils.Helper.showAuthLoading
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
@@ -75,32 +77,16 @@ class LoginFragment : Fragment() {
                 viewModel.login(dataLogin).observe(requireActivity()) { response ->
                     when (response.status) {
                         "success" -> {
-                            lifecycleScope.launch {
-                                val role = viewModel.role.first()
+                            startActivity(
+                                Intent(
+                                    requireActivity(),
+                                    AccountSessionActivity::class.java
+                                ).apply {
+                                    flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                })
 
-                                Log.d("RoleFromPref", "Role: $role")
-
-                                if (role == "user") {
-                                    startActivity(
-                                        Intent(
-                                            requireActivity(),
-                                            HomeActivity::class.java
-                                        ).apply {
-                                            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                        })
-                                } else if (role == "admin") {
-                                    startActivity(
-                                        Intent(
-                                            requireActivity(),
-                                            HomeAdminActivity::class.java
-                                        ).apply {
-                                            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                        })
-                                }
-                            }
                             requireActivity().finish()
                         }
-
                         else -> handleError(requireContext(), response.message?.toInt())
                     }
                 }

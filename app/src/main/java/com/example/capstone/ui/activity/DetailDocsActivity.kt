@@ -44,11 +44,13 @@ class DetailDocsActivity : AppCompatActivity() {
                         binding.apply {
                             if (data != null) {
                                 namaLengkap.text = data.user?.nama
+                                email.text = data.user?.email
+                                phone.text = data.user?.noTelp
                                 dokumen.text = data.jenisDokumen
 
                                 buttonFile.setOnClickListener{
-                                    data.filePath?.let { doc ->
-                                        openOrDownloadFile(this@DetailDocsActivity, doc)
+                                    data.filePath?.let { filePath ->
+                                        openOrDownloadFile(this@DetailDocsActivity, filePath)
                                     }
                                 }
 

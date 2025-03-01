@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Capstone"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activity.AccountSessionActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.UploadActivity"
             android:exported="false" />
         <activity

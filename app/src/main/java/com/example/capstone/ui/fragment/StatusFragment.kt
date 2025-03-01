@@ -44,9 +44,11 @@ class StatusFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         pref = viewModel.preferences
 
-        viewModel.isLoading.observe(requireActivity()) {
-            binding.apply {
-                showLoading(progressBar, loadingView, it)
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (isAdded) {
+                binding.apply {
+                    showLoading(progressBar, loadingView, it)
+                }
             }
         }
 
@@ -58,8 +60,10 @@ class StatusFragment : Fragment() {
 
     private fun setAdapter(user: User?) {
         val userId = user?.id.toString()
-        viewModel.getRegisteredJobs(userId).observe(requireActivity()){ response ->
-            when (response.status){
+        viewModel.getRegisteredJobs(userId).observe(viewLifecycleOwner) { response ->
+            if (!isAdded) return@observe
+
+            when (response.status) {
                 "success" -> {
                     val data = response.data
 
@@ -67,17 +71,21 @@ class StatusFragment : Fragment() {
                         if (data.isNullOrEmpty()) {
                             noData.visibility = View.VISIBLE
                         } else {
-                            rvStatus.visibility = View.VISIBLE
                             noData.visibility = View.GONE
-                            adapter = ListStatusUserAdapter(data)
-                            val layoutManager = LinearLayoutManager(requireContext())
-                            rvStatus.layoutManager = layoutManager
-                            rvStatus.adapter = adapter
+                            rvStatus.visibility = View.VISIBLE
+                            if (!::adapter.isInitialized) {
+                                adapter = ListStatusUserAdapter(data)
+                                rvStatus.layoutManager = LinearLayoutManager(requireContext())
+                                rvStatus.adapter = adapter
+                            }
                         }
                     }
                 }
-
-                else -> handleError(requireContext(), response.message?.toInt())
+                else -> {
+                    if (isAdded) {
+                        handleError(requireContext(), response.message?.toInt())
+                    }
+                }
             }
         }
     }

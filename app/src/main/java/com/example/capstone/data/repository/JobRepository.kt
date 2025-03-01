@@ -185,14 +185,14 @@ class JobRepository(
         return resultLiveData
     }
 
-    fun getVerifiedRegistration(regisId: String): LiveData<GenericResponse<PesertaAktif>> {
+    fun getVerifiedRegistration(regisId: String): LiveData<GenericResponse<JobApply>> {
         _isLoading.value = true
-        val resultLiveData = MutableLiveData<GenericResponse<PesertaAktif>>()
+        val resultLiveData = MutableLiveData<GenericResponse<JobApply>>()
         apiService.getVerifiedRegistration(regisId)
-            .enqueue(object : Callback<GenericResponse<PesertaAktif>> {
+            .enqueue(object : Callback<GenericResponse<JobApply>> {
                 override fun onResponse(
-                    call: Call<GenericResponse<PesertaAktif>>,
-                    response: Response<GenericResponse<PesertaAktif>>
+                    call: Call<GenericResponse<JobApply>>,
+                    response: Response<GenericResponse<JobApply>>
                 ) {
                     resultLiveData.value = if (response.isSuccessful) {
                         response.body()
@@ -206,7 +206,7 @@ class JobRepository(
                     _isLoading.value = false
                 }
 
-                override fun onFailure(call: Call<GenericResponse<PesertaAktif>>, t: Throwable) {
+                override fun onFailure(call: Call<GenericResponse<JobApply>>, t: Throwable) {
                     resultLiveData.value = GenericResponse(
                         message = "500",
                         status = "error",

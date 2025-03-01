@@ -16,10 +16,11 @@ import com.example.capstone.ui.viewmodel.JobViewModel
 import com.example.capstone.ui.viewmodel.factory.DocumentViewModelFactory
 import com.example.capstone.ui.viewmodel.factory.JobViewModelFactory
 import com.example.capstone.utils.Helper
+import com.example.capstone.utils.Helper.showLoading
 
 class VerifikasiRegistrasiFragment : Fragment() {
 
-    private lateinit var binding : FragmentVerifikasiRegistrasiBinding
+    private lateinit var binding: FragmentVerifikasiRegistrasiBinding
 
     private lateinit var adapter: ListLowonganAdminAdapter
 
@@ -38,9 +39,11 @@ class VerifikasiRegistrasiFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.isLoading.observe(requireActivity()) {
-            binding.apply {
-                Helper.showAdminLoading(progressBar, it)
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (isAdded) {
+                binding.apply {
+                    showLoading(progressBar, loadingView, it)
+                }
             }
         }
 
@@ -49,6 +52,8 @@ class VerifikasiRegistrasiFragment : Fragment() {
 
     private fun setAdapter() {
         viewModel.getAllRequested().observe(requireActivity()) { response ->
+            if (!isAdded) return@observe
+
             when (response.status) {
                 "success" -> {
                     val data = response.data
@@ -59,10 +64,12 @@ class VerifikasiRegistrasiFragment : Fragment() {
                         } else {
                             rvVerifikasiRegistrasi.visibility = View.VISIBLE
                             noData.visibility = View.GONE
-                            adapter = ListLowonganAdminAdapter(data)
-                            val layoutManager = LinearLayoutManager(requireContext())
-                            rvVerifikasiRegistrasi.layoutManager = layoutManager
-                            rvVerifikasiRegistrasi.adapter = adapter
+                            if (!::adapter.isInitialized) {
+                                adapter = ListLowonganAdminAdapter(data)
+                                rvVerifikasiRegistrasi.layoutManager =
+                                    LinearLayoutManager(requireContext())
+                                rvVerifikasiRegistrasi.adapter = adapter
+                            }
                         }
                     }
                 }

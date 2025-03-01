@@ -30,7 +30,7 @@ class ListLowonganAdminAdapter(private val listRegistrasi: List<JobApply>) : Rec
 
             itemVerifRegister.setOnClickListener {
                 val intent = Intent(root.context, DetailRegistrasiActivity::class.java).apply {
-                    putExtra("regisId", regis.id)
+                    putExtra("regisId", regis.id.toString())
                 }
                 root.context.startActivity(intent)
             }

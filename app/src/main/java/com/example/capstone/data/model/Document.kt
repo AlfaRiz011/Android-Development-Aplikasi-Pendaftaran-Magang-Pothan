@@ -22,6 +22,6 @@ data class Document(
 	@field:SerializedName("status")
 	val status: String? = null,
 
-	@field:SerializedName("user")
+	@field:SerializedName("User")
 	val user: User? = null
 )

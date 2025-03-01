@@ -41,10 +41,11 @@
         android:textSize="20sp"
         android:textColor="@color/black"
         android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/add_surat_pengantar"
+        app:layout_constraintBottom_toTopOf="@id/surat_pengantar_value"
         app:layout_constraintEnd_toStartOf="@id/add_surat_pengantar"
-        app:layout_constraintTop_toTopOf="@id/add_surat_pengantar" />
+        app:layout_constraintTop_toBottomOf="@id/logo" />
 
     <ImageView
         android:id="@+id/add_surat_pengantar"
@@ -71,7 +72,7 @@
         android:paddingHorizontal="10dp"
         android:layout_marginEnd="100dp"
         android:background="@drawable/shape_edit_text"
-        app:layout_constraintTop_toBottomOf="@id/add_surat_pengantar"
+        app:layout_constraintTop_toBottomOf="@id/surat_pengantar"
         app:layout_constraintStart_toStartOf="@id/surat_pengantar"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -95,13 +96,13 @@
         android:id="@+id/cv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/cv"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="20dp"
         android:layout_marginHorizontal="40dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        android:text="@string/cv"
+        android:textColor="@color/black"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@id/add_cv"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/surat_pengantar_value" />
 
     <ImageView
@@ -112,25 +113,26 @@
         android:contentDescription="@string/img_view_desc"
         android:src="@drawable/icon_add_doc"
         app:layout_constraintTop_toTopOf="@id/cv"
+        app:layout_constraintBottom_toBottomOf="@id/cv"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
         android:id="@+id/cv_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/file"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="4dp"
-        android:paddingVertical="8dp"
-        android:paddingHorizontal="10dp"
-        android:maxLines="1"
-        android:ellipsize="end"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="100dp"
         android:background="@drawable/shape_edit_text"
-        app:layout_constraintTop_toBottomOf="@id/add_cv"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="8dp"
+        android:text="@string/file"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/cv"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/cv" />
 
     <ImageButton
         android:id="@+id/icon_status_cv"

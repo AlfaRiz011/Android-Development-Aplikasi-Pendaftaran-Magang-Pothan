@@ -15,6 +15,7 @@ import com.example.capstone.ui.viewmodel.UserViewModel
 import com.example.capstone.ui.viewmodel.factory.UserViewModelFactory
 import com.example.capstone.utils.Helper.createMultipartFromUri
 import com.example.capstone.utils.Helper.handleError
+import com.example.capstone.utils.Helper.showToast
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -78,8 +79,12 @@ class UploadActivity : AppCompatActivity() {
         viewModel.uploadDocUser(userId, jenisDokumen, selectedFilePart).observe(this@UploadActivity){response ->
             when(response.status){
                 "success" -> {
+                    val intent = Intent(this@UploadActivity, HomeActivity::class.java)
+                    intent.putExtra("UPLOAD_SUCCESS", true)
+                    startActivity(intent)
                     finish()
                 }
+
 
                 else -> handleError(this@UploadActivity, response.message?.toInt())
             }

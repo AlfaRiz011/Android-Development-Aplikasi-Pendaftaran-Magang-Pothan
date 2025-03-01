@@ -11,6 +11,7 @@
     <string name="login">Login</string>
     <string name="registrasi">Registrasi</string>
     <string name="register">Register</string>
+    <string name="logout">Logout</string>
     <string name="email_address">Email Address</string>
     <string name="sudah_punya_akun">Sudah Memiliki Akun?</string>
     <string name="belum_punya_akun">Belum Memiliki Akun?</string>

@@ -3,6 +3,7 @@ package com.example.capstone.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageButton
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
@@ -105,7 +106,7 @@ class DocumentActivity : AppCompatActivity() {
         document: Document?,
         addButton: View,
         valueTextView: View,
-        iconImageView: View,
+        iconImageView: ImageButton,
         title: String,
         jenisDokumen: String
     ) {
@@ -121,11 +122,14 @@ class DocumentActivity : AppCompatActivity() {
                     else -> null to null
                 }
 
-                iconRes?.let { (iconImageView as? AppCompatImageView)?.setImageResource(it) }
-                bgColor?.let {
-                    (iconImageView as? AppCompatImageView)?.backgroundTintList =
-                        ContextCompat.getColorStateList(root.context, it)
+                if (iconRes != null && bgColor != null) {
+                    iconImageView.setImageResource(iconRes)
+                    iconImageView.backgroundTintList = ContextCompat.getColorStateList(root.context, bgColor)
+                    iconImageView.visibility = View.VISIBLE
+                } else {
+                    iconImageView.visibility = View.GONE
                 }
+
                 iconImageView.visibility = View.VISIBLE
             } else {
                 addButton.visibility = View.VISIBLE

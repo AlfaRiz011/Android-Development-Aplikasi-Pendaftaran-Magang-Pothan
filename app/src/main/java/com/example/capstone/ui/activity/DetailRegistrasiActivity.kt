@@ -20,13 +20,14 @@ class DetailRegistrasiActivity : AppCompatActivity() {
 
     private var regisId: String? = null
 
+    private val docViewModel: DocumentViewModel by viewModels {
+        DocumentViewModelFactory.getInstance(this@DetailRegistrasiActivity)
+    }
+
     private val viewModel: JobViewModel by viewModels {
         JobViewModelFactory.getInstance(this@DetailRegistrasiActivity)
     }
 
-    private val docViewModel: DocumentViewModel by viewModels {
-        DocumentViewModelFactory.getInstance(this@DetailRegistrasiActivity)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,12 +41,13 @@ class DetailRegistrasiActivity : AppCompatActivity() {
     }
 
     private fun setView() {
-        regisId?.let {
+        regisId?.let {it ->
             viewModel.getVerifiedRegistration(it).observe(this) { response ->
                 when (response.status) {
                     "success" -> {
+                        val data = response.data
+
                         binding.apply {
-                            val data = response.data
                             if (data != null) {
                                 namaValue.text = data.user?.nama
                                 posisiValue.text = data.lowongan?.posisi
@@ -55,7 +57,7 @@ class DetailRegistrasiActivity : AppCompatActivity() {
                         }
                     }
 
-                    else -> handleError(this, response.message?.toInt())
+                    else -> showToast(this,"gagal ambil data")
                 }
             }
         }
@@ -90,7 +92,7 @@ class DetailRegistrasiActivity : AppCompatActivity() {
                     }
                 }
 
-                else -> handleError(this, response.message?.toInt())
+                else -> showToast(this,"docViewModel gagal")
             }
         }
 
@@ -115,7 +117,7 @@ class DetailRegistrasiActivity : AppCompatActivity() {
                         }
                     }
 
-                    else -> handleError(this, response.message?.toInt())
+                    else -> showToast(this,"reject gagal")
                 }
             }
         }
@@ -131,7 +133,7 @@ class DetailRegistrasiActivity : AppCompatActivity() {
                         }
                     }
 
-                    else -> handleError(this, response.message?.toInt())
+                    else -> showToast(this,"approve gagal")
                 }
             }
         }

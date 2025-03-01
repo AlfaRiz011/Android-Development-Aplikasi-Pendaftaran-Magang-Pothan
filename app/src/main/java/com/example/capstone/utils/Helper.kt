@@ -86,8 +86,13 @@ object Helper {
         }
     }
 
-    fun openOrDownloadFile(context: Context, fileUrl: String) {
-        val uri = Uri.parse(fileUrl)
+    fun openOrDownloadFile(context: Context, filePath: String) {
+        val baseUrl = "http://192.168.1.7:5000"
+
+        val normalizedPath = filePath.replace("\\", "/")
+        val fullUrl = "$baseUrl/$normalizedPath"
+
+        val uri = Uri.parse(fullUrl)
         val intent = Intent(Intent.ACTION_VIEW).apply {
             setDataAndType(uri, "application/pdf")
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -97,9 +102,10 @@ object Helper {
         try {
             context.startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            showDownloadDialog(context, fileUrl)
+            showDownloadDialog(context, fullUrl)
         }
     }
+
 
     private fun showDownloadDialog(context: Context, fileUrl: String) {
         AlertDialog.Builder(context)

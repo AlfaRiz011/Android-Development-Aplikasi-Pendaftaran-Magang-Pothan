@@ -37,7 +37,7 @@ class JobViewModel(
         return jobRepository.getAllJobsAdmin()
     }
 
-    fun getVerifiedRegistration(regisId: String): LiveData<GenericResponse<PesertaAktif>> {
+    fun getVerifiedRegistration(regisId: String): LiveData<GenericResponse<JobApply>> {
         return jobRepository.getVerifiedRegistration(regisId)
     }
 
