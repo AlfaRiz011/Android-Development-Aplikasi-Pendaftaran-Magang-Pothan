@@ -150,6 +150,7 @@ class DocumentActivity : AppCompatActivity() {
             putExtra("jenisDokumen", jenisDokumen)
         }
         startActivity(intent)
+        finish()
     }
 
 }

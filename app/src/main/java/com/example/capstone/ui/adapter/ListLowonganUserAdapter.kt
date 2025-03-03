@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone.data.model.Lowongan
 import com.example.capstone.databinding.ItemLowonganBinding
 import com.example.capstone.ui.activity.DetailActivity
+import com.example.capstone.utils.Helper
 
 class ListLowonganUserAdapter(private var listJob: List<Lowongan>) : RecyclerView.Adapter<ListLowonganUserAdapter.ItemViewHolder>() {
     inner class ItemViewHolder(val binding: ItemLowonganBinding) : RecyclerView.ViewHolder(binding.root)
@@ -23,7 +24,7 @@ class ListLowonganUserAdapter(private var listJob: List<Lowongan>) : RecyclerVie
             namaPosisi.text = job.posisi
             divisi.text = job.jabatan
             periode.text = job.periodeMagang
-            closeDate.text = job.closedAt
+            closeDate.text = Helper.formatDate(job.closedAt.toString())
 
             itemJob.setOnClickListener {
                 val intent = Intent(root.context, DetailActivity::class.java).apply {

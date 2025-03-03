@@ -8,11 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.capstone.data.local.UserPreferences
 import com.example.capstone.databinding.ActivityDetailBinding
+import com.example.capstone.ui.viewmodel.DocumentViewModel
 import com.example.capstone.ui.viewmodel.JobViewModel
 import com.example.capstone.ui.viewmodel.UserViewModel
+import com.example.capstone.ui.viewmodel.factory.DocumentViewModelFactory
 import com.example.capstone.ui.viewmodel.factory.JobViewModelFactory
 import com.example.capstone.ui.viewmodel.factory.UserViewModelFactory
-import com.example.capstone.utils.Helper
+import com.example.capstone.utils.Helper.formatDate
 import com.example.capstone.utils.Helper.handleError
 import com.example.capstone.utils.Helper.showLoading
 import kotlinx.coroutines.flow.firstOrNull
@@ -30,6 +32,10 @@ class DetailActivity : AppCompatActivity() {
 
     private val userViewModel: UserViewModel by viewModels {
         UserViewModelFactory.getInstance(this)
+    }
+
+    private val docViewModel: DocumentViewModel by viewModels {
+        DocumentViewModelFactory.getInstance(this)
     }
 
     private lateinit var pref: UserPreferences
@@ -59,7 +65,50 @@ class DetailActivity : AppCompatActivity() {
             }
 
             setView(jobId, userId)
-            setActionButtons(jobId, userId)
+            checkUserData(userId)
+        }
+    }
+
+    private fun checkUserData(userId: String) {
+        docViewModel.getUserDocuments(userId).observe(this) { response ->
+            when (response.status) {
+                "success" -> {
+                    response.data?.let { responseData ->
+
+                        val requiredDocuments = listOf("cv", "surat pengantar", "ktm", "ktp")
+
+                        val isComplete = requiredDocuments.all { required ->
+                            responseData.any {
+                                it.jenisDokumen.equals(required, ignoreCase = true) &&
+                                        it.status.equals("diterima", ignoreCase = true)
+                            }
+                        }
+
+                        if (isComplete) {
+                            setActionButtons(jobId, userId)
+                        } else {
+                            binding.apply {
+                                dokumen.visibility = View.VISIBLE
+                                pending.visibility = View.GONE
+                                ditolak.visibility = View.GONE
+                                buttonDaftar.visibility = View.GONE
+                                diterima.visibility = View.GONE
+
+
+                                dokumen.setOnClickListener {
+                                    val intent =
+                                        Intent(this@DetailActivity, DocumentActivity::class.java)
+                                    intent.putExtra("userId", userId)
+                                    startActivity(intent)
+                                    finish()
+                                }
+                            }
+                        }
+                    }
+                }
+
+                else -> handleError(this@DetailActivity, response.message?.toInt())
+            }
         }
     }
 
@@ -76,27 +125,35 @@ class DetailActivity : AppCompatActivity() {
                                     when (job?.status) {
                                         "diterima" -> {
                                             pending.visibility = View.GONE
+                                            ditolak.visibility = View.GONE
                                             buttonDaftar.visibility = View.GONE
+                                            dokumen.visibility = View.GONE
                                             diterima.visibility = View.VISIBLE
                                         }
 
                                         "pending" -> {
                                             diterima.visibility = View.GONE
+                                            ditolak.visibility = View.GONE
                                             buttonDaftar.visibility = View.GONE
+                                            dokumen.visibility = View.GONE
                                             pending.visibility = View.VISIBLE
                                         }
 
-                                        else -> {
+                                        "ditolak" -> {
                                             diterima.visibility = View.GONE
                                             pending.visibility = View.GONE
-                                            buttonDaftar.visibility = View.VISIBLE
+                                            buttonDaftar.visibility = View.GONE
+                                            dokumen.visibility = View.GONE
+                                            ditolak.visibility = View.VISIBLE
                                         }
                                     }
                                 }
                             } ?: run {
                                 diterima.visibility = View.GONE
                                 pending.visibility = View.GONE
-                                buttonDaftar.visibility = View.VISIBLE
+                                ditolak.visibility = View.GONE
+                                buttonDaftar.visibility = View.GONE
+                                dokumen.visibility = View.GONE
                             }
                         }
 
@@ -123,7 +180,7 @@ class DetailActivity : AppCompatActivity() {
                                 namaPosisi.text = job.posisi
                                 divisi2.text = job.jabatan
                                 periodeValue.text = job.periodeMagang
-                                waktuTutupValue.text = job.closedAt
+                                waktuTutupValue.text = formatDate(job.closedAt.toString())
                                 deskripsiValue.text = job.deskripsi
                             }
                         }
@@ -137,14 +194,14 @@ class DetailActivity : AppCompatActivity() {
 
     private fun registrasi(userId: String?, jobId: String?) {
         if (userId != null && jobId != null) {
-            userViewModel.applyJobUser(userId, jobId).observe(this@DetailActivity){response ->
-                when(response.status){
-                    "success" ->{
+            userViewModel.applyJobUser(userId, jobId).observe(this@DetailActivity) { response ->
+                when (response.status) {
+                    "success" -> {
                         val refreshIntent = Intent(this, DetailActivity::class.java).apply {
                             putExtra("jobId", jobId)
                         }
-                        finish()
                         startActivity(refreshIntent)
+                        finish()
                     }
 
                     else -> handleError(this@DetailActivity, response.message?.toInt())

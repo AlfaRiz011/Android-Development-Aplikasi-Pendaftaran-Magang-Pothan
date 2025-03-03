@@ -113,6 +113,10 @@ class DetailRegistrasiActivity : AppCompatActivity() {
                 when (response.status) {
                     "success" -> {
                         binding.apply {
+                            val intent =
+                                Intent(this@DetailRegistrasiActivity, HomeAdminActivity::class.java)
+                            intent.putExtra("REJECT", true)
+                            startActivity(intent)
                             finish()
                         }
                     }
@@ -129,6 +133,10 @@ class DetailRegistrasiActivity : AppCompatActivity() {
                 when (response.status) {
                     "success" -> {
                         binding.apply {
+                            val intent =
+                                Intent(this@DetailRegistrasiActivity, HomeAdminActivity::class.java)
+                            intent.putExtra("APPROVE", true)
+                            startActivity(intent)
                             finish()
                         }
                     }

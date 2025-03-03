@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.capstone.R
@@ -19,6 +20,7 @@ import com.example.capstone.ui.viewmodel.UserViewModel
 import com.example.capstone.ui.viewmodel.factory.JobViewModelFactory
 import com.example.capstone.ui.viewmodel.factory.UserViewModelFactory
 import com.example.capstone.utils.Helper
+import com.example.capstone.utils.Helper.formatDate
 import com.example.capstone.utils.Helper.showLoading
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
@@ -52,6 +54,7 @@ class ProfileFragment : Fragment() {
             val user = pref.getUser().firstOrNull()
 
             setView(user)
+            setOnBack()
         }
     }
 
@@ -63,7 +66,7 @@ class ProfileFragment : Fragment() {
             alamat.text = user?.alamat
             asalKampus.text = user?.universitas
             nim.text = user?.nim
-            tanggalLahir.text = user?.tanggalLahir
+            tanggalLahir.text = formatDate(user?.tanggalLahir.toString())
 
             buttonDocument.setOnClickListener {
                 val intent = Intent(requireActivity(), DocumentActivity::class.java)
@@ -82,5 +85,14 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
+    }
+    private fun setOnBack() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    requireActivity().finish()
+                }
+            })
     }
 }

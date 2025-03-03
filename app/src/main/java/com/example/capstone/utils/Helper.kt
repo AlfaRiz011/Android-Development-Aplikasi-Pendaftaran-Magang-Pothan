@@ -9,6 +9,8 @@ import android.provider.OpenableColumns
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
+import java.text.SimpleDateFormat
+import java.util.*
 import android.widget.TextView
 import android.widget.Toast
 import com.example.capstone.R
@@ -106,6 +108,20 @@ object Helper {
         }
     }
 
+    fun formatDate(dateStr: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).apply {
+                timeZone = TimeZone.getTimeZone("UTC")
+            }
+
+            val outputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val date = inputFormat.parse(dateStr)
+            outputFormat.format(date)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            dateStr
+        }
+    }
 
     private fun showDownloadDialog(context: Context, fileUrl: String) {
         AlertDialog.Builder(context)

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -55,6 +56,7 @@ class StatusFragment : Fragment() {
         lifecycleScope.launch {
             val user = pref.getUser().firstOrNull()
             setAdapter(user)
+            setOnBack()
         }
     }
 
@@ -88,5 +90,15 @@ class StatusFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun setOnBack() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    requireActivity().finish()
+                }
+            })
     }
 }

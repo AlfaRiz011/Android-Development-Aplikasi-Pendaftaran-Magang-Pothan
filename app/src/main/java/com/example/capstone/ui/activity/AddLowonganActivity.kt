@@ -59,15 +59,16 @@ class AddLowonganActivity : AppCompatActivity() {
                 datePicker.show()
             }
 
-            val data = JobBodyRequest(
-                posisi = poisiInput.text.toString(),
-                jabatan = divisiInput.text.toString(),
-                closedAt = tutupInput.text.toString(),
-                periodeMagang = periodeInput.text.toString(),
-                deskripsi = deskripsiInput.text.toString()
-            )
 
             buttonAddLowongan.setOnClickListener {
+                val data = JobBodyRequest(
+                    posisi = poisiInput.text.toString(),
+                    jabatan = divisiInput.text.toString(),
+                    closedAt = tutupInput.text.toString(),
+                    periodeMagang = periodeInput.text.toString(),
+                    deskripsi = deskripsiInput.text.toString()
+                )
+
                 viewModel.createJob(data).observe(this@AddLowonganActivity) { response ->
                     when (response.status) {
                         "success" -> {

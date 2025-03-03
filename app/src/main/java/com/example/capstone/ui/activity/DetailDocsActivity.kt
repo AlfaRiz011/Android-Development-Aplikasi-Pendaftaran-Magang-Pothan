@@ -1,5 +1,6 @@
 package com.example.capstone.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -77,6 +78,10 @@ class DetailDocsActivity : AppCompatActivity() {
                 when (response.status) {
                     "success" -> {
                         binding.apply {
+                            val intent =
+                                Intent(this@DetailDocsActivity, HomeAdminActivity::class.java)
+                            intent.putExtra("REJECT", true)
+                            startActivity(intent)
                             finish()
                         }
                     }
@@ -93,6 +98,10 @@ class DetailDocsActivity : AppCompatActivity() {
                 when (response.status) {
                     "success" -> {
                         binding.apply {
+                            val intent =
+                                Intent(this@DetailDocsActivity, HomeAdminActivity::class.java)
+                            intent.putExtra("APPROVE", true)
+                            startActivity(intent)
                             finish()
                         }
                     }

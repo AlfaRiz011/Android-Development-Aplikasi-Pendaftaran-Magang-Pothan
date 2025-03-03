@@ -10,6 +10,7 @@ import com.example.capstone.data.model.Lowongan
 import com.example.capstone.databinding.ItemLowonganBinding
 import com.example.capstone.databinding.ItemStatusBinding
 import com.example.capstone.ui.activity.DetailActivity
+import com.example.capstone.utils.Helper
 
 class ListStatusUserAdapter(private val listRegistrasi: List<JobApply>) : RecyclerView.Adapter<ListStatusUserAdapter.ItemViewHolder>() {
     inner class ItemViewHolder(val binding: ItemStatusBinding) : RecyclerView.ViewHolder(binding.root)
@@ -26,7 +27,7 @@ class ListStatusUserAdapter(private val listRegistrasi: List<JobApply>) : Recycl
             namaPosisi.text = regis.lowongan?.posisi.toString()
             divisi.text = regis.lowongan?.jabatan.toString()
             periode.text = regis.lowongan?.periodeMagang.toString()
-            closeDate.text = regis.lowongan?.closedAt.toString()
+            closeDate.text = Helper.formatDate(regis.lowongan?.closedAt.toString())
 
             fun View.setVisible(visible: Boolean) {
                 visibility = if (visible) View.VISIBLE else View.GONE

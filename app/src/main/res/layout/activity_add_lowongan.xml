@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="20dp"
-        android:paddingTop="30dp">
+        android:paddingVertical="30dp">
 
     <ImageView
         android:id="@+id/logo"
@@ -69,6 +69,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:inputType="text"
+            android:paddingHorizontal="20dp"
             android:background="@drawable/shape_edit_text"
             app:layout_constraintTop_toBottomOf="@id/poisi_title"
             app:layout_constraintStart_toStartOf="@id/poisi_title"
@@ -92,6 +93,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:inputType="text"
+            android:paddingHorizontal="20dp"
             android:background="@drawable/shape_edit_text"
             app:layout_constraintTop_toBottomOf="@id/divisi_title"
             app:layout_constraintStart_toStartOf="@id/divisi_title"
@@ -115,6 +117,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:inputType="text"
+            android:paddingHorizontal="20dp"
             android:background="@drawable/shape_edit_text"
             app:layout_constraintTop_toBottomOf="@id/periode_title"
             app:layout_constraintStart_toStartOf="@id/periode_title"
@@ -138,6 +141,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:inputType="text"
+            android:paddingHorizontal="20dp"
             android:background="@drawable/shape_edit_text"
             app:layout_constraintTop_toBottomOf="@id/tutup_title"
             app:layout_constraintStart_toStartOf="@id/tutup_title"
@@ -161,6 +165,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:inputType="text"
+            android:paddingHorizontal="20dp"
             android:background="@drawable/shape_edit_text"
             app:layout_constraintTop_toBottomOf="@id/deskripsi_title"
             app:layout_constraintStart_toStartOf="@id/deskripsi_title"

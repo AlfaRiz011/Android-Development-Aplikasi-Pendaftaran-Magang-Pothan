@@ -221,6 +221,23 @@
             app:layout_constraintTop_toBottomOf="@id/deskripsi_value" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/ditolak"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/red"
+            android:text="@string/ditolak"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:visibility="gone"
+            app:cornerRadius="10dp"
+            app:icon="@drawable/icon_reject"
+            app:iconGravity="textStart"
+            app:layout_constraintEnd_toEndOf="@id/deskripsi_value"
+            app:layout_constraintStart_toStartOf="@id/deskripsi_value"
+            app:layout_constraintTop_toBottomOf="@id/deskripsi_value" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/pending"
             android:layout_width="0dp"
             android:layout_height="50dp"
@@ -232,6 +249,22 @@
             android:visibility="gone"
             app:cornerRadius="10dp"
             app:icon="@drawable/icon_pending"
+            app:iconGravity="textStart"
+            app:layout_constraintEnd_toEndOf="@id/deskripsi_value"
+            app:layout_constraintStart_toStartOf="@id/deskripsi_value"
+            app:layout_constraintTop_toBottomOf="@id/deskripsi_value" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/dokumen"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/blue"
+            android:text="@string/complete_docs"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:visibility="gone"
+            app:cornerRadius="10dp"
             app:iconGravity="textStart"
             app:layout_constraintEnd_toEndOf="@id/deskripsi_value"
             app:layout_constraintStart_toStartOf="@id/deskripsi_value"

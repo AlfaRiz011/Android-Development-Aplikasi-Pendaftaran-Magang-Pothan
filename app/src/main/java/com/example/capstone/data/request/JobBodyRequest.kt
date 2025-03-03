@@ -13,9 +13,6 @@ data class JobBodyRequest(
     @field:SerializedName("periode_magang")
     val periodeMagang: String? = null,
 
-    @field:SerializedName("id")
-    val id: Int? = null,
-
     @field:SerializedName("posisi")
     val posisi: String? = null,
 

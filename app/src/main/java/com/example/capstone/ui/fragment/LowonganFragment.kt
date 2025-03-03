@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.capstone.databinding.FragmentLowonganBinding
@@ -45,6 +46,8 @@ class LowonganFragment : Fragment() {
         }
 
         setAdapter()
+
+        setOnBack()
     }
 
     private fun setAdapter() {
@@ -77,5 +80,14 @@ class LowonganFragment : Fragment() {
                 }
             }
         }
+    }
+    private fun setOnBack() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    requireActivity().finish()
+                }
+            })
     }
 }

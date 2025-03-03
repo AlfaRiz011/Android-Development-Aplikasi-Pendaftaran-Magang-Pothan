@@ -7,12 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.capstone.R
 import com.example.capstone.databinding.ActivityHomeAdminBinding
-import com.example.capstone.ui.fragment.LowonganFragment
-import com.example.capstone.ui.fragment.ProfileFragment
-import com.example.capstone.ui.fragment.StatusFragment
 import com.example.capstone.ui.fragment.VerifikasiDocsFragment
 import com.example.capstone.ui.fragment.VerifikasiRegistrasiFragment
-import com.example.capstone.utils.Helper
 import com.example.capstone.utils.Helper.showToast
 
 class HomeAdminActivity : AppCompatActivity() {
@@ -24,12 +20,23 @@ class HomeAdminActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val uploadSuccess = intent.getBooleanExtra("UPLOAD_SUCCESS", false)
+        val reject = intent.getBooleanExtra("REJECT", false)
+        val approve = intent.getBooleanExtra("APPROVE", false)
 
         setOnBackPressedHandler()
         setupNavBar()
         setFragment(VerifikasiRegistrasiFragment())
         setView()
         checkUpload(uploadSuccess)
+        checkApproval(reject, approve)
+    }
+
+    private fun checkApproval(reject: Boolean, approve: Boolean) {
+        if (reject) {
+            showToast(this@HomeAdminActivity, "Permintaan berhasil ditolak")
+        } else if (approve){
+            showToast(this@HomeAdminActivity, "Permintaan berhasil diterima")
+        }
     }
 
     private fun setView() {
